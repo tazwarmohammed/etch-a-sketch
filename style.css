@@ -3,3 +3,11 @@
     grid-template: repeat(16, 40px) / repeat(16, 40px);
     gap: 5px;
 }
+
+.initial-color {
+    background: pink;
+}
+
+.change-color {
+    background: grey;
+}
