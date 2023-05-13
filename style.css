@@ -1,7 +1,9 @@
 .container {
     display: grid;
-    grid-template: repeat(16, 40px) / repeat(16, 40px);
-    gap: 5px;
+    /* grid-template: repeat(16, 10px) / repeat(16, 10px); */
+    gap: 2px;
+    width: 960px;
+    height: 960px;
 }
 
 .initial-color {
@@ -10,4 +12,8 @@
 
 .change-color {
     background: grey;
+}
+
+button {
+    margin: 15px;
 }
