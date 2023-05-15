@@ -8,56 +8,28 @@ const normalBtn = document.querySelector('.normal');
 
 const rgbBtn = document.querySelector('.rgb');
 
+const shadeBtn = document.querySelector('.shade');
+
 const eraseBtn = document.querySelector('.erase');
+
+let mouseDown = false;
+document.body.onmousedown = () => (mouseDown = true);
+document.body.onmouseup = () => (mouseDown = false);
 
 let dimension = 16;
 
 function setPalette(dimension) {
     removePalette();
     container.setAttribute('style', `grid-template: repeat(${dimension}, 1fr) / repeat(${dimension}, 1fr);`);
-    for (let index = 1; index <= dimension * dimension; index++) {
+    for (let index = 0; index < dimension * dimension; index++) {
         const child = document.createElement('div');
         child.classList.add('initial-color');
-        // child.textContent = index;
-        // child.setAttribute('style', 'font-size: 20px')
+        child.addEventListener('mouseover', normalMode);
+        child.addEventListener('mousedown', normalMode);
         container.appendChild(child);
     }
 }
 
-function normalMode(e) {
-    removeButtonOverlay();
-    e.target.classList.add('mode-on');
-    const children = document.querySelectorAll('.initial-color');
-    children.forEach((child) => {
-        child.addEventListener('mouseover', () => {
-            child.style.cssText = `background: black;`; 
-        });
-    });
-}
-
-function rgbMode(e) {
-    removeButtonOverlay();
-    e.target.classList.add('mode-on');
-    const children = document.querySelectorAll('.initial-color');
-    children.forEach((child) => {
-        child.addEventListener('mouseover', () => {
-            const randomColor = Math.floor(Math.random()*16777215).toString(16);
-            child.style.cssText = `background: #${randomColor};`; 
-        });
-    });
-}
-
-function eraseMode(e) {
-    removeButtonOverlay();
-    e.target.classList.add('mode-on');
-    const children = document.querySelectorAll('.initial-color');
-    children.forEach((child) => {
-        child.addEventListener('mouseover', () => {
-            child.style.cssText = `background: white;`; 
-        });
-    });
-}
- 
 function removePalette() {
     const children = document.querySelectorAll('.initial-color');
     children.forEach((child) => {
@@ -85,6 +57,55 @@ function initPalette() {
     setPalette(dimension);
 }
 
+function normalMode(e) {
+    if (e.type === 'mouseover' && !mouseDown) return;
+    removeButtonOverlay();
+    console.log(e.target);
+    e.target.classList.add('mode-on');
+    // e.target.style.cssText = `background: black;`;
+    // const children = document.querySelectorAll('.initial-color');
+    // children.forEach((child) => {
+    //     child.addEventListener('mouseover', () => {
+    //         child.style.cssText = `background: black;`; 
+    //     });
+    // });
+}
+
+function rgbMode(e) {
+    removeButtonOverlay();
+    e.target.classList.add('mode-on');
+    const children = document.querySelectorAll('.initial-color');
+    children.forEach((child) => {
+        child.addEventListener('mouseover', () => {
+            const randomColor = Math.floor(Math.random()*16777215).toString(16);
+            child.style.cssText = `background: #${randomColor};`; 
+        });
+    });
+}
+
+function shadeMode(e) {
+    removeButtonOverlay();
+    e.target.classList.add('mode-on');
+    const children = document.querySelectorAll('.initial-color');
+    children.forEach((child) => {
+        child.addEventListener('mouseover', () => {
+            child.style.cssText = `background: rgba(0, 0, 0, 0.1);`; 
+        })
+    });
+
+}
+
+function eraseMode(e) {
+    removeButtonOverlay();
+    e.target.classList.add('mode-on');
+    const children = document.querySelectorAll('.initial-color');
+    children.forEach((child) => {
+        child.addEventListener('mouseover', () => {
+            child.style.cssText = `background: white;`; 
+        });
+    });
+}
+
 function removeButtonOverlay() {
     document.querySelectorAll('button').forEach((button) => {
         button.classList.remove('mode-on');
@@ -98,6 +119,8 @@ resetBtn.addEventListener('click', resetPalette);
 normalBtn.addEventListener('click', normalMode);
 
 rgbBtn.addEventListener('click', rgbMode);
+
+shadeBtn.addEventListener('click', shadeMode);
 
 eraseBtn.addEventListener('click', eraseMode);
 
