@@ -1,19 +1,40 @@
+body {
+    background-color: lightblue;
+}
+
 .container {
     display: grid;
-    /* grid-template: repeat(16, 10px) / repeat(16, 10px); */
-    gap: 2px;
+    gap: 1px;
+    background-color: rgb(175, 175, 175);
     width: 960px;
     height: 960px;
+    border: 1px solid rgb(0, 0, 0);
 }
 
 .initial-color {
-    background: pink;
+    background: white;
 }
 
 .change-color {
-    background: grey;
+    background: black;
 }
 
 button {
-    margin: 15px;
+    margin: 10px;
+}
+
+.mode-on {
+    background: rgb(153, 153, 153);
+}
+
+p {
+    margin: 10px;
+}
+
+.mode {
+    margin-top: 40px;
+}
+
+.reset {
+    margin-top: 30px;
 }
