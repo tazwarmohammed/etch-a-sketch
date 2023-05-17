@@ -1,5 +1,20 @@
+html, body {
+    height: 100%;
+}
+
+html {
+    display: table;
+    margin: auto;
+}
+
 body {
+    display: table-cell;
+    vertical-align: middle;
     background-color: lightblue;
+}
+
+p {
+    text-align: center;
 }
 
 .grid-container {
@@ -29,12 +44,20 @@ button {
 
 p {
     margin: 10px;
+    font-size: large;
 }
 
 .mode {
-    margin-top: 40px;
+    /* margin-top: 40px; */
+    max-width: 325px;
+    margin: auto;
 }
 
 .reset {
     margin-top: 30px;
+}
+
+.set {
+    margin-top: 30px;
+    margin-bottom: 30px;
 }

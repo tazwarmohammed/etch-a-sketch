@@ -15,8 +15,8 @@ const eraseBtn = document.querySelector('.erase');
 let mode;
 
 let mouseDown = false;
-document.body.onmousedown = () => (mouseDown = true);
-document.body.onmouseup = () => (mouseDown = false);
+container.onmousedown = () => (mouseDown = true);
+container.onmouseup = () => (mouseDown = false);
 
 let dimension = 16;
 
@@ -27,8 +27,20 @@ function setPalette(dimension) {
         const child = document.createElement('div');
         child.classList.add('grid-element');
         child.addEventListener('mouseover', changeColor);
-        child.addEventListener('mousedown', changeColor);
+        // child.addEventListener('mousedown', changeColor);
         container.appendChild(child);
+    }
+}
+
+function changeColor(e) {
+    if (!mouseDown) return;
+    if(mode === 'normal') {
+        e.target.style.cssText = `background: black;`;
+    } else if(mode === 'rgb') {
+        const randomColor = Math.floor(Math.random()*16777215).toString(16);
+        e.target.style.cssText = `background: #${randomColor};`; 
+    } else if(mode === 'erase') {
+        e.target.style.cssText = `background: white;`;
     }
 }
 
@@ -46,7 +58,6 @@ function resetPalette() {
     children.forEach((child) => {
         child.style.cssText = `background: white`;
     });
-    
 }
 
 function initPalette() {
@@ -59,18 +70,6 @@ function initPalette() {
         } else dimension = prompt('Please enter number of squares on each side of palette');
     } while (dimension > 100 || dimension < 1);
     setPalette(dimension);
-}
-
-function changeColor(e) {
-    if (e.type === 'mouseover' && !mouseDown) return;
-    if(mode === 'normal') {
-        e.target.style.cssText = `background: black;`;
-    } else if(mode === 'rgb') {
-        const randomColor = Math.floor(Math.random()*16777215).toString(16);
-        e.target.style.cssText = `background: #${randomColor};`; 
-    } else if(mode === 'erase') {
-        e.target.style.cssText = `background: white;`;
-    }
 }
 
 function normalMode(e) {
