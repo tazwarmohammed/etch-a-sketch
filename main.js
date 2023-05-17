@@ -12,9 +12,11 @@ const rgbBtn = document.querySelector('.rgb');
 
 const eraseBtn = document.querySelector('.erase');
 
+let mode;
+
 let mouseDown = false;
-container.onmousedown = () => (mouseDown = true);
-container.onmouseup = () => (mouseDown = false);
+document.body.onmousedown = () => (mouseDown = true);
+document.body.onmouseup = () => (mouseDown = false);
 
 let dimension = 16;
 
@@ -24,6 +26,8 @@ function setPalette(dimension) {
     for (let index = 0; index < dimension * dimension; index++) {
         const child = document.createElement('div');
         child.classList.add('grid-element');
+        child.addEventListener('mouseover', changeColor);
+        child.addEventListener('mousedown', changeColor);
         container.appendChild(child);
     }
 }
@@ -36,12 +40,13 @@ function removePalette() {
 }
 
 function resetPalette() {
-    // removeButtonOverlay();
+    removeButtonOverlay();
+    mode = 'none';
     const children = document.querySelectorAll('.grid-element');
     children.forEach((child) => {
-        // child.style.cssText = `background: white`;
-
-    })
+        child.style.cssText = `background: white`;
+    });
+    
 }
 
 function initPalette() {
@@ -56,31 +61,28 @@ function initPalette() {
     setPalette(dimension);
 }
 
+function changeColor(e) {
+    if (e.type === 'mouseover' && !mouseDown) return;
+    if(mode === 'normal') {
+        e.target.style.cssText = `background: black;`;
+    } else if(mode === 'rgb') {
+        const randomColor = Math.floor(Math.random()*16777215).toString(16);
+        e.target.style.cssText = `background: #${randomColor};`; 
+    } else if(mode === 'erase') {
+        e.target.style.cssText = `background: white;`;
+    }
+}
+
 function normalMode(e) {
-    // if (e.type === 'mouseover' && !mouseDown) return;
     removeButtonOverlay();
-    // console.log(e.target);
     e.target.classList.add('mode-on');
-    // e.target.style.cssText = `background: black;`;
-    const children = document.querySelectorAll('.grid-element');
-    children.forEach((child) => {
-        child.addEventListener('mouseover', () => {
-            child.style.cssText = `background: black;`; 
-        });
-    });
+    mode = 'normal';
 }
 
 function rgbMode(e) {
-    
     removeButtonOverlay();
     e.target.classList.add('mode-on');
-    const children = document.querySelectorAll('.grid-element');
-    children.forEach((child) => {
-        child.addEventListener('mouseover', () => {
-            const randomColor = Math.floor(Math.random()*16777215).toString(16);
-            child.style.cssText = `background: #${randomColor};`; 
-        });
-    });
+    mode = 'rgb';
 }
 
 // function shadeMode(e) {
@@ -97,12 +99,7 @@ function rgbMode(e) {
 function eraseMode(e) {
     removeButtonOverlay();
     e.target.classList.add('mode-on');
-    const children = document.querySelectorAll('.grid-element');
-    children.forEach((child) => {
-        child.addEventListener('mouseover', () => {
-            child.style.cssText = `background: white;`; 
-        });
-    });
+    mode = 'erase';
 }
 
 function removeButtonOverlay() {
