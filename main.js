@@ -9,8 +9,11 @@ const normalBtn = document.querySelector('.normal');
 const rgbBtn = document.querySelector('.rgb');
 
 const shadeBtn = document.querySelector('.shade');
+const shadeBtn = document.querySelector('.shade');
 
 const eraseBtn = document.querySelector('.erase');
+
+let mode;
 
 let mode;
 
@@ -25,7 +28,7 @@ function setPalette(dimension) {
     container.setAttribute('style', `grid-template: repeat(${dimension}, 1fr) / repeat(${dimension}, 1fr);`);
     for (let index = 0; index < dimension * dimension; index++) {
         const child = document.createElement('div');
-        child.style.cssText = `background: white;`;
+        // child.style.cssText = `background: white;`;
         child.addEventListener('mouseover', changeColor);
         container.appendChild(child);
     }
