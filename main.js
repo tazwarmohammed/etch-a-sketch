@@ -25,8 +25,7 @@ function setPalette(dimension) {
     container.setAttribute('style', `grid-template: repeat(${dimension}, 1fr) / repeat(${dimension}, 1fr);`);
     for (let index = 0; index < dimension * dimension; index++) {
         const child = document.createElement('div');
-        // child.style.cssText = `background: white;`;
-        child.classList.add('pixel');
+        child.style.cssText = `background: white;`;
         child.addEventListener('mouseover', changeColor);
         container.appendChild(child);
     }
@@ -67,8 +66,7 @@ function addBlack(child, hoverCount) {
 }
 
 function removePalette() {
-    const children = document.querySelectorAll('.pixel');
-    children.forEach((child) => {
+    container.querySelectorAll('div').forEach((child) => {
         child.remove();
     });
 }
